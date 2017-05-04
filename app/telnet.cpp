@@ -24,7 +24,7 @@ void telnetCmdNetSettings(String commandLine  ,CommandOutput* commandOutput)
 	auth_num_cmds--;
 	if (numToken != 3)
 	{
-		commandOutput->println("Usage set ip|nm|gw|dhcp|wifissid|wifipass|mqttbroker|mqttport|mqttclientid|mqttuser|mqttpass <value>");
+		commandOutput->println("Usage set ip|nm|gw|dhcp|wifissid|wifipass|mqttbroker|mqttport|mqttclientid|mqttuser|mqttpass|publishinterval|debounceinterval <value>");
 	}
 	else if (commandToken[1] == "ip")
 	{
@@ -69,12 +69,19 @@ void telnetCmdNetSettings(String commandLine  ,CommandOutput* commandOutput)
 		if (newport > 0 && newport < 65536)
 			NetConfig.mqtt_port = newport;
 	}
-	else if (commandToken[1] == "checkintervall")
+	else if (commandToken[1] == "publishinterval")
 	{
 		uint32_t checkintervall = commandToken[2].toInt();
 		commandOutput->printf("%s: '%d'\r\n",commandToken[1].c_str(),checkintervall);
 		if (checkintervall >= 1000 && checkintervall <= 600000)
-			NetConfig.check_intervall = checkintervall;
+			NetConfig.publish_interval = checkintervall;
+	}
+	else if (commandToken[1] == "debounceinterval")
+	{
+		uint32_t debounceintervall = commandToken[2].toInt();
+		commandOutput->printf("%s: '%d'\r\n",commandToken[1].c_str(),debounceintervall);
+		if (debounceintervall >= 10 && debounceintervall <= 10000)
+			NetConfig.debounce_interval = debounceintervall;
 	}
 	else if (commandToken[1] == "mqttclientid")
 	{
@@ -116,7 +123,8 @@ void telnetCmdPrint(String commandLine  ,CommandOutput* commandOutput)
 	commandOutput->println("MQTT Broker: " + NetConfig.mqtt_broker + ":" + String(NetConfig.mqtt_port));
 	commandOutput->println("MQTT ClientID: " + NetConfig.mqtt_clientid);
 	commandOutput->println("MQTT Login: " + NetConfig.mqtt_user +"/"+ NetConfig.mqtt_pass);
-	commandOutput->println("Check Intervall: " + NetConfig.check_intervall);
+	commandOutput->println("Publish Interval: " + NetConfig.publish_interval);
+	commandOutput->println("Debounce Interval: " + NetConfig.debounce_interval);
 }
 
 void telnetCmdSave(String commandLine  ,CommandOutput* commandOutput)

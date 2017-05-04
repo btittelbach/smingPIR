@@ -77,7 +77,7 @@ void startMqttClient()
 	mqtt->setCompleteDelegate(checkMQTTDisconnect);
 	// mqtt->subscribe(NetConfig.getMQTTTopic(JSON_TOPIC3_LIGHT,true));
 
-	procMQTTTimer.initializeMs(NetConfig.check_intervall, publishMessage).start(); // every 6 seconds
+	procMQTTTimer.initializeMs(NetConfig.publish_interval, publishMessage).start(); // every 16 seconds
 }
 
 void stopMqttClient()

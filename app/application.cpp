@@ -15,6 +15,9 @@ NetConfigStorage NetConfig;
 
 uint32_t pid_event_ctr_ = 0;
 uint32_t last_read_pid_event_ctr_ = 0;
+uint32_t last_pid_event_time_ = 0;
+
+#define DEBOUNCE_TIME 3500
 
 ///////////////////////////////////////
 ///// Interrupt
@@ -22,7 +25,13 @@ uint32_t last_read_pid_event_ctr_ = 0;
 
 void IRAM_ATTR interruptHandler()
 {
-	pid_event_ctr_++;
+	if (digitalRead(PIR_PIN))
+		last_pid_event_time_ = millis();
+	else {
+		if (millis() - last_pid_event_time_ >= NetConfig.debounce_interval) {
+			pid_event_ctr_++;
+		}
+	}
 }
 
 bool did_pir_trigger()
@@ -37,8 +46,9 @@ bool did_pir_trigger()
 void setupInterrupt()
 {
 	pinMode(PIR_PIN, INPUT);
+	attachInterrupt(PIR_PIN, interruptHandler, CHANGE);
 	// pinMode(PIR_PIN, INPUT_PULLUP);
-	attachInterrupt(PIR_PIN, interruptHandler, RISING);
+	// attachInterrupt(PIR_PIN, interruptHandler, FALLING);
 }
 
 ///////////////////////////////////////
