@@ -123,8 +123,8 @@ void telnetCmdPrint(String commandLine  ,CommandOutput* commandOutput)
 	commandOutput->println("MQTT Broker: " + NetConfig.mqtt_broker + ":" + String(NetConfig.mqtt_port));
 	commandOutput->println("MQTT ClientID: " + NetConfig.mqtt_clientid);
 	commandOutput->println("MQTT Login: " + NetConfig.mqtt_user +"/"+ NetConfig.mqtt_pass);
-	commandOutput->println("Publish Interval: " + NetConfig.publish_interval);
-	commandOutput->println("Debounce Interval: " + NetConfig.debounce_interval);
+	commandOutput->println("Publish Interval: " + String(NetConfig.publish_interval));
+	commandOutput->println("Debounce Interval: " + String(NetConfig.debounce_interval));
 }
 
 void telnetCmdSave(String commandLine  ,CommandOutput* commandOutput)
