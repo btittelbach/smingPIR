@@ -28,7 +28,7 @@ void IRAM_ATTR interruptHandler()
 	if (digitalRead(PIR_PIN))
 		last_pid_event_time_ = millis();
 	else {
-		if (millis() - last_pid_event_time_ >= NetConfig.debounce_interval) {
+		if (millis() - last_pid_event_time_ >= NetConfig.debounce_interval && millis() - last_pid_event_time_ < 2* NetConfig.debounce_interval) {
 			pid_event_ctr_++;
 		}
 	}
