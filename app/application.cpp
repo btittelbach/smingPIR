@@ -17,8 +17,6 @@ uint32_t pid_event_ctr_ = 0;
 uint32_t last_read_pid_event_ctr_ = 0;
 uint32_t last_pid_event_time_ = 0;
 
-#define DEBOUNCE_TIME 3500
-
 ///////////////////////////////////////
 ///// Interrupt
 ///////////////////////////////////////
@@ -28,7 +26,8 @@ void IRAM_ATTR interruptHandler()
 	if (digitalRead(PIR_PIN))
 		last_pid_event_time_ = millis();
 	else {
-		if (millis() - last_pid_event_time_ >= NetConfig.debounce_interval && millis() - last_pid_event_time_ < 2* NetConfig.debounce_interval) {
+		debugf("pulsedur: %dms",millis() - last_pid_event_time_);
+		if (millis() - last_pid_event_time_ > NetConfig.debounce_interval) {
 			pid_event_ctr_++;
 		}
 	}

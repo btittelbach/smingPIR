@@ -30,7 +30,7 @@ struct NetConfigStorage
 	bool enabledhcp=true;
 	uint32_t mqtt_port=1883;  //8883 for ssl
 	uint32_t publish_interval=8000;
-	uint32_t debounce_interval=3500;
+	uint32_t debounce_interval=2900;
 	String authtoken;
 
 	void load()
