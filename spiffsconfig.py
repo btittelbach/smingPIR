@@ -5,17 +5,17 @@ import os
 import struct
 
 def writeConfig(ip,nm,gw,wifi_ssid,wifi_pass,mqtt_broker,mqtt_clientid,mqtt_user,mqtt_pass,authtoken,dhcp=True,mqtt_port=1883,update_interval=7000,debounce_interval=3500):
-    NET_SETTINGS_FILE = "net.conf"
-    WIFISSID_SETTINGS_FILE = "wifi.ssid.conf"
-    WIFIPASS_SETTINGS_FILE = "wifi.pass.conf"
-    MQTTCLIENT_SETTINGS_FILE = "mqtt.clientid.conf"
-    MQTTUSER_SETTINGS_FILE = "mqtt.user.conf"
-    MQTTPASS_SETTINGS_FILE = "mqtt.pass.conf"
-    MQTTBROKER_SETTINGS_FILE = "mqttbroker.conf"
-    AUTHTOKEN_SETTINGS_FILE = "authtoken.conf"
+    NET_SETTINGS_FILE = "net"
+    WIFISSID_SETTINGS_FILE = "wifi.ssid"
+    WIFIPASS_SETTINGS_FILE = "wifi.pass"
+    MQTTCLIENT_SETTINGS_FILE = "mqtt.clientid"
+    MQTTUSER_SETTINGS_FILE = "mqtt.user"
+    MQTTPASS_SETTINGS_FILE = "mqtt.pass"
+    MQTTBROKER_SETTINGS_FILE = "mqttbroker"
+    AUTHTOKEN_SETTINGS_FILE = "authtoken"
     USEDHCP_SETTINGS_FILE = "dhcp.flag"
-    UPDATE_INTERVAL_SETTINGS_FILE = "updateinterval.conf"
-    DEBOUNCE_INTERVAL_SETTINGS_FILE = "debounceinterval.conf"
+    UPDATE_INTERVAL_SETTINGS_FILE = "updateinterval"
+    DEBOUNCE_INTERVAL_SETTINGS_FILE = "debounceinterval"
     DIR="./files/"
     with open(os.path.join(DIR, NET_SETTINGS_FILE),"wb") as fh:
         fh.write(struct.pack(">III", int(ip_address(ip)), int(ip_address(nm)), int(ip_address(gw))))

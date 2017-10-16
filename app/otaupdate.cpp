@@ -14,7 +14,7 @@ void OtaUpdate_prepareSystem()
 	//start firmware update
 }
 
-void OtaUpdate_CallBack(bool result) {
+void OtaUpdate_CallBack(rBootHttpUpdate& client, bool result) {
 	
 	//Serial.println("In callback...");
 	if(result == true) {
@@ -62,12 +62,14 @@ void OtaUpdate(String rom0url, String rom1url, String spiffsurl) {
 #endif
 
 #ifndef DISABLE_SPIFFS
+#ifdef RBOOT_SPIFFS_0
 	// use user supplied values (defaults for 4mb flash in makefile)
 	if (slot == 0) {
 		otaUpdater->addItem(RBOOT_SPIFFS_0, spiffsurl);
 	} else {
 		otaUpdater->addItem(RBOOT_SPIFFS_1, spiffsurl);
 	}
+#endif
 #endif
 
 	// request switch and reboot on success

@@ -3,17 +3,17 @@
 #ifndef INCLUDE_DEFAULTCONFIG_H_
 #define INCLUDE_DEFAULTCONFIG_H_
 
-const String DEFAULTLIGHT_SETTINGS_FILE = "defaultlight.conf";
-const String NET_SETTINGS_FILE = "net.conf";
-const String WIFISSID_SETTINGS_FILE = "wifi.ssid.conf";
-const String WIFIPASS_SETTINGS_FILE = "wifi.pass.conf";
-const String MQTTCLIENT_SETTINGS_FILE = "mqtt.clientid.conf";
-const String MQTTUSER_SETTINGS_FILE = "mqtt.user.conf";
-const String MQTTPASS_SETTINGS_FILE = "mqtt.pass.conf";
-const String MQTTBROKER_SETTINGS_FILE = "mqttbroker.conf";
-const String AUTHTOKEN_SETTINGS_FILE = "authtoken.conf";
-const String UPDATE_INTERVAL_SETTINGS_FILE = "updateinterval.conf";
-const String DEBOUNCE_INTERVAL_SETTINGS_FILE = "debounceinterval.conf";
+const String DEFAULTLIGHT_SETTINGS_FILE = "defaultlight";
+const String NET_SETTINGS_FILE = "net";
+const String WIFISSID_SETTINGS_FILE = "wifi.ssid";
+const String WIFIPASS_SETTINGS_FILE = "wifi.pass";
+const String MQTTCLIENT_SETTINGS_FILE = "mqtt.clientid";
+const String MQTTUSER_SETTINGS_FILE = "mqtt.user";
+const String MQTTPASS_SETTINGS_FILE = "mqtt.pass";
+const String MQTTBROKER_SETTINGS_FILE = "mqttbroker";
+const String AUTHTOKEN_SETTINGS_FILE = "authtoken";
+const String UPDATE_INTERVAL_SETTINGS_FILE = "updateinterval";
+const String DEBOUNCE_INTERVAL_SETTINGS_FILE = "debounceinterval";
 const String USEDHCP_SETTINGS_FILE = "dhcp.flag";
 
 struct NetConfigStorage

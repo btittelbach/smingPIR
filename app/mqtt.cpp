@@ -1,4 +1,5 @@
 #include <SmingCore/SmingCore.h>
+#include <Adafruit_BMP280/Adafruit_BMP280.h>
 #include <spiffsconfig.h>
 #include "pinconfig.h"
 #include "mqtt.h"
@@ -11,6 +12,8 @@
 
 Timer procMQTTTimer;
 MqttClient *mqtt = 0;
+
+extern Adafruit_BMP280 bmp; // I2C
 
 
 // Check for MQTT Disconnection
@@ -46,7 +49,23 @@ void publishMessage()
 	if (did_pir_trigger())
 	{
 		Serial.println("movement!!");
-		mqtt->publish(NetConfig.getMQTTTopic(JSON_TOPIC3_MOVEMENT), "{}", false);
+		mqtt->publish(NetConfig.getMQTTTopic(JSON_TOPIC3_MOVEMENT), "{\"Sensorindex\":3}", false);
+	}
+
+	if (isBmp280Available())
+	{ //{"Ts": 1494021935, "Value": 16.0, "Location": "WC"}
+		float temp = bmp.readTemperature();
+		float pressure = bmp.readPressure()/100; // 100 Pa = 1 hPa
+		Serial.printf("BMP280 T:%f *C, P:%f hPa\r\n",temp,pressure);
+		if (temp < -130.0) 
+		{
+			setupBmp280();
+		} else {
+			mqtt->publish(NetConfig.getMQTTTopic(JSON_TOPIC3_TEMP), String("{\"Location\":\"")+NetConfig.mqtt_clientid+"\",\"Value\":" +temp+String("}"), true);
+			mqtt->publish(NetConfig.getMQTTTopic(JSON_TOPIC3_PRESSURE), String("{\"Location\":\"")+NetConfig.mqtt_clientid+"\",\"HPa\":" +pressure+String("}"), true);
+		}
+	} else {
+		setupBmp280();
 	}
 }
 
@@ -77,7 +96,7 @@ void startMqttClient()
 	mqtt->setCompleteDelegate(checkMQTTDisconnect);
 	// mqtt->subscribe(NetConfig.getMQTTTopic(JSON_TOPIC3_LIGHT,true));
 
-	procMQTTTimer.initializeMs(NetConfig.publish_interval, publishMessage).start(); // every 16 seconds
+	procMQTTTimer.initializeMs(NetConfig.publish_interval, publishMessage).start();
 }
 
 void stopMqttClient()
